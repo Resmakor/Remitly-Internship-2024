@@ -1,5 +1,5 @@
 # Remitly Internship 2024
-Project created as part of Remitly's 2024 internship recruitment. The project consisted of creating an application to verify JSON files in [AWS::IAM:Role Policy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-role-policy.html) format and writing a method to check if the value for the 'Resource' field is an asterisk or some other value. Method shall return logical false if an input JSON Resource field contains a single asterisk and true in any other case.
+Project created as part of Remitly's 2024 internship recruitment. The project consisted of creating an application to verify JSON files in [AWS::IAM:Role Policy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-role-policy.html) format and writing a method to check if the value for the `Resource` field is an asterisk or some other value. Method shall return logical false if an input JSON Resource field contains a single asterisk and true in any other case.
 
 # AWS::IAM:Role Policy JSON example
 ![AWS::IAM:Role Policy example](https://github.com/Resmakor/Remitly-Internship-2024/blob/main/iam_role_policy_properties/aws_iam_role_policy_example.PNG?raw=true)
