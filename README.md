@@ -1,7 +1,7 @@
 # Remitly Internship 2024
 Project created as part of Remitly's 2024 internship recruitment. The project consisted of creating an application to verify JSON files in [AWS::IAM:Role Policy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-role-policy.html) format and writing a method to check if the value for the 'Resource' field is an asterisk or some other value. Method shall return logical false if an input JSON Resource field contains a single asterisk and true in any other case.
 
-# AWS::IAM:Role Policy example
+# AWS::IAM:Role Policy JSON example
 ![AWS::IAM:Role Policy example](https://github.com/Resmakor/Remitly-Internship-2024/blob/main/iam_role_policy_properties/aws_iam_role_policy_example.PNG?raw=true)
 #
 
@@ -17,7 +17,7 @@ Project created as part of Remitly's 2024 internship recruitment. The project co
 # Starting up
 If you do not have the Python language installed, you can download it [here](https://www.python.org/downloads/).
 
-If you do have it start the terminal in the Remitly-Internship-2024 directory and type ``python main.py``. By default it should display ``Method returned False for statement with index 0.``
+If you do have it start the terminal in the ``Remitly-Internship-2024`` directory and type ``python main.py``. By default it should display: ``Method returned False for statement with index 0.``
 
 To test the programme for different variants of the JSON structure (including error handling) you can modify the ``data.json`` file to your own expectations.
 
@@ -53,7 +53,7 @@ self.policy_name_pattern
 ```python
 self.warnings
 ```
-- Flag on whether to display warnings or not. Set to False (do not display) by default. NOTE: If you change the flag to True in your code, unit tests will not work properly.
+- Flag on whether to display warnings or not. Set to ``False`` (do not display) by default. NOTE: If you change the flag to ``True`` in your code, unit tests will not work properly.
 ```python
 self.filename
 ```
@@ -95,7 +95,7 @@ def validate_json(self):
 ```python
 def validate_AWS_keys_first_and_second_level(self):
 ```
-- The method checks the keys within a JSON object (```data_json```) representing an AWS policy. It ensures that the first level keys includes "PolicyDocument" and "PolicyName", while the second level keys within "PolicyDocument" includes "Version" and "Statement". If any unexpected keys are found, it raises PolicyNameError or PolicyDocumentError with corresponding messages. I assumed there may be copies overwriting.
+- The method checks the keys within a JSON object (```data_json```) representing an AWS policy. It ensures that the first level keys includes "PolicyDocument" and "PolicyName", while the second level keys within "PolicyDocument" includes "Version" and "Statement". If any unexpected keys are found, it raises ``PolicyNameError`` or ``PolicyDocumentError`` with corresponding messages. I assumed there may be copies overwriting.
 #
 
 ```python
@@ -125,25 +125,25 @@ If all required keys are present, it returns the ``PolicyDocument_json`` object 
 
 
 ```python
-def validate_statement(self, index, statement):
+def validate_Statement(self, index, statement):
 ```
 - The method validates an individual statement within an AWS policy. It checks if the statement contains all the required keys ("Effect", "Action", "Resource") and raises a ``StatementError`` with appropriate messages if any key is missing or if there are unexpected keys. Additionally, it checks for specific values for the "Effect" key ("Allow" or "Deny") and prints warnings if optional keys ("Sid", "Principal", "Condition") are not included, depending on the warnings flag.
 #
 
 ```python
-def validate_resource(self, resource):
+def validate_Resource(self, resource):
 ```
-- The method validates the resource specified in the AWS policy. It returns False if the resource is set to '*', otherwise it returns True. This is the method that was required in the task conditions.
+- The method validates the resource specified in the AWS policy. It returns ``False`` if the resource is set to '*', otherwise it returns ``True``. This is the method that was required in the task conditions.
 # 
 
 ```python
 def run(self):
 ```
-- The method arranges the validation process for an AWS policy. It first validates the policy name, then validates the policy document structure and keys, iterates through each statement within the policy document to validate them individually using the ``validate_statement`` function and prints the result of ``validate_resource`` for each statement. Finally, it ensures the file is closed regardless of whether an exception occurs during the process.
+- The method arranges the validation process for an AWS policy. It first validates the policy name, then validates the policy document structure and keys, iterates through each statement within the policy document to validate them individually using the ``validate_Statement`` function and prints the result of ``validate_Resource`` for each statement. Finally, it ensures the file is closed regardless of whether an exception occurs during the process.
 # 
 
 # File `main.py`
-- In the ``main.py`` file, an instance of the ``Solution`` class is created with the warnings parameter set to False (default value) and the filename parameter set to "``data.json``". Then, the run method of the ``Solution`` instance is called to execute the validation process defined in the solution file.
+- In the ``main.py`` file, an instance of the ``Solution`` class is created with the warnings parameter set to ``False`` (default value) and the filename parameter set to "``data.json``". Then, the run method of the ``Solution`` instance is called to execute the validation process defined in the solution file.
 
 # File `unit_tests.py`
 - In the ``unit_tests.py``, various test cases are defined to validate the functionality of the ``Solution`` class methods. These tests cover scenarios such as unexpected keys at different levels, missing keys, invalid key values, and correct resource validation. Each test case creates an instance of ``Solution`` object with a specific test file, invokes the relevant method and asserts that the expected exceptions or output are raised or printed. 
@@ -151,3 +151,6 @@ For some tests, the ``unittest.mock.patch`` module is used to mock the standard 
 
 # Folder `tests`
 - Folder with JSON files that are used for unit tests. The name of each file suggests what will be tested.
+
+# Folder `iam_role_policy_properties`
+- Folder with the images used in the README file.

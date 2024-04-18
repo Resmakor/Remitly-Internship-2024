@@ -82,7 +82,7 @@ class Solution:
                 'Missing key \'Statement\' in PolicyDocument!')
         return PolicyDocument_json
 
-    def validate_statement(self, index, statement):
+    def validate_Statement(self, index, statement):
         allowed_keys = {"Sid", "Effect", "Principal",
                         "Action", "Resource", "Condition"}
         unexpected_keys = set(statement.keys()) - allowed_keys
@@ -111,7 +111,7 @@ class Solution:
             print(
                 f'Warning: You may include key \'Condition\' in statement with index {index}!')
 
-    def validate_resource(self, resource):
+    def validate_Resource(self, resource):
         if resource == '*':
             return False
         return True
@@ -123,8 +123,8 @@ class Solution:
             self.validate_AWS_keys_first_and_second_level()
             PolicyDocuments_statements = PolicyDocument_json['Statement']
             for index, statement in enumerate(PolicyDocuments_statements):
-                self.validate_statement(index, statement)
+                self.validate_Statement(index, statement)
                 print(
-                    f"Method returned {self.validate_resource(statement['Resource'])} for statement with index {index}.")
+                    f"Method returned {self.validate_Resource(statement['Resource'])} for statement with index {index}.")
         finally:
             self.close_file()
