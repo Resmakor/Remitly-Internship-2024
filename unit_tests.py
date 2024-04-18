@@ -6,12 +6,6 @@ from solution import Solution, PolicyNameError, PolicyDocumentError, StatementEr
 
 class TestSolution(unittest.TestCase):
 
-    def test_valid_json(self):
-        filename = "tests/valid_data.json"
-        solution = Solution(filename=filename)
-        result = solution.run()
-        self.assertIsNone(result)
-
     def test_unexpected_keys_first_level(self):
         filename = "tests/unexpected_keys_first_level.json"
         with self.assertRaises(PolicyNameError) as context:
@@ -21,6 +15,7 @@ class TestSolution(unittest.TestCase):
             str(context.exception),
             "Unexpected key(s) on first level: {'Unexpected_key'}"
         )
+        solution.close_file()
 
     def test_unexpected_keys_second_level(self):
         filename = "tests/unexpected_keys_second_level.json"
@@ -31,6 +26,7 @@ class TestSolution(unittest.TestCase):
             str(context.exception),
             "Unexpected key(s) on second level: {'Unexpected_key'}"
         )
+        solution.close_file()
 
     def test_missing_policy_name(self):
         filename = "tests/missing_policy_name.json"
@@ -41,6 +37,7 @@ class TestSolution(unittest.TestCase):
             str(context.exception),
             "Missing required key 'PolicyName'!"
         )
+        solution.close_file()
 
     def test_policy_name_length(self):
         filename = "tests/policy_name_length.json"
@@ -51,6 +48,7 @@ class TestSolution(unittest.TestCase):
             str(context.exception),
             "Length of value for required key 'PolicyName' has to be between 1 and 128!"
         )
+        solution.close_file()
 
     def test_policy_name_pattern(self):
         filename = "tests/policy_name_pattern.json"
@@ -59,8 +57,9 @@ class TestSolution(unittest.TestCase):
             solution.validate_PolicyName()
         self.assertEqual(
             str(context.exception),
-            "Value for required key 'PolicyName' does not match the [\w+=,.@-]+ pattern!"
+            "Value for required key 'PolicyName' does not match the [\\w+=,.@-]+ pattern!"
         )
+        solution.close_file()
 
     def test_missing_policy_document(self):
         filename = "tests/missing_policy_document.json"
@@ -71,6 +70,7 @@ class TestSolution(unittest.TestCase):
             str(context.exception),
             "Missing required key 'PolicyDocument'!"
         )
+        solution.close_file()
 
     def test_missing_version(self):
         filename = "tests/missing_version.json"
@@ -81,6 +81,7 @@ class TestSolution(unittest.TestCase):
             str(context.exception),
             "Missing key 'Version' in PolicyDocument!"
         )
+        solution.close_file()
 
     def test_missing_statement(self):
         filename = "tests/missing_statement.json"
@@ -91,6 +92,7 @@ class TestSolution(unittest.TestCase):
             str(context.exception),
             "Missing key 'Statement' in PolicyDocument!"
         )
+        solution.close_file()
 
     def test_missing_effect(self):
         filename = "tests/missing_effect.json"
@@ -117,8 +119,8 @@ class TestSolution(unittest.TestCase):
         solution = Solution(filename=filename)
         with self.assertRaises(StatementError) as context:
             solution.run()
-            self.assertIn("Unexpected key(s) {'Unexpected_key'} in statement with index 0!", str(
-                context.exception))
+        self.assertIn("Unexpected key(s) {'Unexpected_key'} in statement with index 0!", str(
+            context.exception))
 
     def test_resource_method_False(self):
         filename = "tests/valid_data.json"

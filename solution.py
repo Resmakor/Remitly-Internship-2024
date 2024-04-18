@@ -42,7 +42,7 @@ class Solution:
         return data_json
 
     def validate_AWS_keys_first_and_second_level(self):
-        # I assume there may be copies overwriting
+        '''I assume there may be copies overwriting'''
         first_level_keys = self.data_json.keys()
         allowed_first_level_keys = {"PolicyDocument", "PolicyName"}
         if first_level_keys != allowed_first_level_keys:
