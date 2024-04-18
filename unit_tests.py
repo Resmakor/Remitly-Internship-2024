@@ -104,6 +104,16 @@ class TestSolution(unittest.TestCase):
             "Missing key 'Effect' in statement with index 0!"
         )
 
+    def test_invalid_effect_value(self):
+        filename = "tests/invalid_effect_value.json"
+        with self.assertRaises(StatementError) as context:
+            solution = Solution(filename=filename)
+            solution.run()
+        self.assertEqual(
+            str(context.exception),
+            "Invalid value 'Invalid_value' for key 'Effect' in statement with index 0! Value for 'Effect' has to be 'Allow' or 'Deny'."
+        )
+
     def test_missing_action(self):
         filename = "tests/missing_action.json"
         with self.assertRaises(StatementError) as context:
@@ -112,6 +122,16 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(
             str(context.exception),
             "Missing key 'Action' in statement with index 0!"
+        )
+
+    def test_missing_resource(self):
+        filename = "tests/missing_resource.json"
+        with self.assertRaises(StatementError) as context:
+            solution = Solution(filename=filename)
+            solution.run()
+        self.assertEqual(
+            str(context.exception),
+            "Missing key 'Resource' in statement with index 0!"
         )
 
     def test_unexpected_keys_in_statement(self):
